@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <time.h>
+
 
 using namespace std;
 
@@ -7,27 +9,36 @@ using namespace std;
 // 다만 퍼펙트 포워딩에서 decltype을 써야하는 번거로움이 생겼다.
 
 // abbreviated function template
-decltype(auto) abb(auto a, auto b)
+decltype(auto) abb1(auto a, auto b)
 {
   return a + b;
 }
 
 
 // perfect forwarding
-decltype(auto) abb(auto&& f, auto&& a)
+decltype(auto) abb2(auto&& f, auto&& a)
 {
   return invoke(forward<decltype(f)>(f), forward<decltype(a)>(a));
 }
 
 
 // cppreference 예시
-void f1(auto); // same as template<class T> void f(T)
-void f2(C1 auto); // same as template<C1 T> void f2(T), if C1 is a concept
-void f3(C2 auto...); // same as template<C2... Ts> void f3(Ts...), if C2 is a concept
-void f4(const C3 auto*, C4 auto&); // same as template<C3 T, C4 U> void f4(const T*, U&);
+//void f1(auto); // same as template<class T> void f(T)
+//void f2(C1 auto); // same as template<C1 T> void f2(T), if C1 is a concept
+//void f3(C2 auto...); // same as template<C2... Ts> void f3(Ts...), if C2 is a concept
+//void f4(const C3 auto*, C4 auto&); // same as template<C3 T, C4 U> void f4(const T*, U&);
 
 int main()
 {
-  cout << abb(1, 2) << endl; // 3
-  cout << abb("string1"s, "string2"s) << endl; // "string1stirng2"
+	time_t start, end;
+	double result;
+
+	start = time(NULL);
+
+	cout << abb1(1, 2) << endl; // 3
+	cout << abb1("string1"s, "string2"s) << endl; // "string1stirng2"
+
+	end = time(NULL);
+	result = static_cast<double> (end - start);
+	printf("%f", result);
 }
