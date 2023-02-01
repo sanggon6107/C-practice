@@ -49,9 +49,10 @@ int main()
 	// 람다식(캡쳐 등등은 어떻게 동작하는가?)
 	thread th4([](int a, int b) {cout << a + b << endl; }, 1, 2);
 
-	thread th2(bind(&Function3, 1, 2) );
+	thread th5(bind(&Function3, 1, 2) );
 
 	if (th2.joinable()) { th2.join(); }
 	if (th3.joinable()) { th3.join(); }
 	if (th4.joinable()) { th4.join(); }
+	if (th5.joinable()) { th5.join(); }
 }
